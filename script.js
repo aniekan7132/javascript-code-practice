@@ -1,35 +1,35 @@
 "use script";
 
-let arr = ['a', 'b', 'c', 'd', 'e'];
+/*let arr = ["a", "b", "c", "d", "e"];*/
 
 // SLICE - Does not change/mutate original array
-console.log(arr.slice(2));
+/*console.log(arr.slice(2));
 console.log(arr.slice(2, 4));
 console.log(arr.slice(-2));
 console.log(arr.slice(-1));
 console.log(arr.slice(2, -2));
-console.log([...arr]);
+console.log([...arr]);*/
 
 // SPLICE - Changes/mutates original array
 //console.log(arr.splice(2));
-console.log(arr.splice(-1));
+/*console.log(arr.splice(-1));
 console.log(arr);
 arr.splice(1, 2);
-console.log(arr);
+console.log(arr);*/
 
 // REVERSE - Changes/mutates original array
-arr = ["a", "b", "c", "d", "e"];
-const arr2 = ['j', 'i', 'h', 'g', 'f'];
+/*arr = ["a", "b", "c", "d", "e"];
+const arr2 = ["j", "i", "h", "g", "f"];
 console.log(arr2.reverse());
-console.log(arr2);
+console.log(arr2);*/
 
 // CONCAT - Does not change/mutate original array
-const letters = arr.concat(arr2);
+/*const letters = arr.concat(arr2);
 console.log(letters);
 console.log([...arr, ...arr2]);
 
-// JOIN 
-console.log(letters.join(' - '));
+// JOIN
+console.log(letters.join(" - "));*/
 
 // const currencies = new Map([
 //   ['USD', 'United States dollar'],
@@ -43,41 +43,41 @@ console.log(letters.join(' - '));
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // for (const [i, movement] of movementes.entries())
-for (const movement of movements) {
+/*for (const movement of movements) {
   if (movement > 0) {
     console.log(`You deposited ${movement}`);
   } else {
     console.log(`You withdrew ${Math.abs(movement)}`);
   }
-}
+}*/
 
 // With counter variable
-for (const [i, movement] of movements.entries()) {
+/*for (const [i, movement] of movements.entries()) {
   if (movement > 0) {
     console.log(`Movement ${i + 1}: You deposited ${movement}`);
   } else {
     console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`);
   }
-}
+}*/
 
 ////////////////////////////////////////
-console.log('---- FOREACH ----');
+/*console.log("---- FOREACH ----");
 movements.forEach(function (movement) {
   if (movement > 0) {
     console.log(`You deposited ${movement}`);
   } else {
     console.log(`You withdrew ${Math.abs(movement)}`);
   }
-});
+});*/
 
 // With counter/index variable
-movements.forEach(function (movement, index, array) {
+/*movements.forEach(function (movement, index, array) {
   if (movement > 0) {
     console.log(`Movement ${index + 1}: You deposited ${movement}`);
   } else {
     console.log(`Movement ${index + 1}: You withdrew ${Math.abs(movement)}`);
   }
-});
+});*/
 
 // forEach with Map
 /*const currencies = new Map([
@@ -259,8 +259,8 @@ console.log(movements);*/
 
 //   if (b > a) return -1;
 // });
-movements.sort((a, b) => a - b);
-console.log(movements);
+/*movements.sort((a, b) => a - b);
+console.log(movements);*/
 
 // Descending order
 // movements.sort((a, b) => {
@@ -300,3 +300,111 @@ labelBalance.addEventListener('click', function () {
 
   console.log(movementsUI);
 });*/
+
+// Constructor functions - OOP
+const Person = function (firstName, birthYear) {
+  // Instance properties
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+
+  // Never do this
+  // this.calcAge = function() {
+  //   console.log(2037 - birthYear);
+  // }
+};
+
+// 1. New {} is created
+// 2. function is called, this = {}
+// 3. {} is linked to prototype
+// 4. function automatically returns {}
+const jonas = new Person("jonas", 1991);
+const matilda = new Person("matilda", 2017);
+const jack = new Person("jack", 1975);
+console.log(jonas, matilda, jack);
+
+// Prototypes
+console.log(Person.prototype);
+
+// Setting methods
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+jonas.calcAge();
+matilda.calcAge();
+
+console.log(jonas.__proto__);
+console.log(jonas.__proto__ === Person.prototype);
+console.log(Person.prototype.isPrototypeOf(matilda));
+console.log(Person.prototype.isPrototypeOf(Person));
+
+// setting property
+Person.prototype.species = "Homo sapiens";
+console.log(jonas.species, matilda.species);
+
+// Prortotype on construction functions
+console.log(jonas.hasOwnProperty("firstName"));
+console.log(jonas.hasOwnProperty("species"));
+
+console.log(jonas.__proto__);
+console.log(jonas.__proto__.__proto__);
+console.log(jonas.__proto__.__proto__.__proto__);
+console.log(Person.prototype.constructor);
+
+console.dir(Person.prototype.constructor);
+
+// Prototype on arrays
+const arr = [3, 3, 3, 4, 4, 4, 4, 7, 6, 5, 4, 7];
+console.log(arr.__proto__);
+console.log(arr.__proto__ === Array.prototype);
+console.log(arr.__proto__.__proto__);
+
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+
+console.log(arr.unique());
+
+const h1 = document.querySelector("h1");
+
+// ES6 CLASSES
+
+// class expression
+//const PersonCl = class {}
+
+// class declaration
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  // methods will be applied to the .prototype property
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.firstName}`);
+  }
+}
+
+const jessica = new PersonCl("jessica", 1996);
+console.log(jessica);
+jessica.calcAge();
+
+// PersonCl.prototype.greet = function() {
+//   console.log(`Hey ${this.firstName}`);
+// }
+jessica.greet();
+
+// Classes are not hoisted even the class declarations
+// Classes are first-class citizens
+// Classes are executed in strict mode
+
+// Getters and Setters
+
+// getters and setters are called assessor properties 
+// normal properties are called data properties
+
+// getters and setters in simple object literals
