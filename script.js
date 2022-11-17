@@ -302,7 +302,7 @@ labelBalance.addEventListener('click', function () {
 });*/
 
 // Constructor functions - OOP ----- COMMIT FROM HERE
-/*const Person = function (firstName, birthYear) {
+const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
   this.birthYear = birthYear;
@@ -357,7 +357,7 @@ console.log(jonas.__proto__.__proto__);
 console.log(jonas.__proto__.__proto__.__proto__);
 console.log(Person.prototype.constructor);
 
-console.dir(Person.prototype.constructor);*/
+console.dir(Person.prototype.constructor);
 
 // Prototype on arrays
 const arr = [3, 3, 3, 4, 4, 4, 4, 7, 6, 5, 4, 7];
