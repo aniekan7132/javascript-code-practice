@@ -301,8 +301,8 @@ labelBalance.addEventListener('click', function () {
   console.log(movementsUI);
 });*/
 
-// Constructor functions - OOP
-const Person = function (firstName, birthYear) {
+// Constructor functions - OOP ----- COMMIT FROM HERE
+/*const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
   this.birthYear = birthYear;
@@ -317,10 +317,16 @@ const Person = function (firstName, birthYear) {
 // 2. function is called, this = {}
 // 3. {} is linked to prototype
 // 4. function automatically returns {}
-const jonas = new Person("jonas", 1991);
-const matilda = new Person("matilda", 2017);
-const jack = new Person("jack", 1975);
-console.log(jonas, matilda, jack);
+const jonas = new Person("Jonas", 1991);
+const matilda = new Person("Matilda", 2017);
+const jack = new Person("Jack", 1975);
+console.log(jonas instanceof Person);
+
+Person.hey = function () {
+  console.log("Hey there");
+};
+
+Person.hey();
 
 // Prototypes
 console.log(Person.prototype);
@@ -351,7 +357,7 @@ console.log(jonas.__proto__.__proto__);
 console.log(jonas.__proto__.__proto__.__proto__);
 console.log(Person.prototype.constructor);
 
-console.dir(Person.prototype.constructor);
+console.dir(Person.prototype.constructor);*/
 
 // Prototype on arrays
 const arr = [3, 3, 3, 4, 4, 4, 4, 7, 6, 5, 4, 7];
@@ -368,43 +374,135 @@ console.log(arr.unique());
 const h1 = document.querySelector("h1");
 
 // ES6 CLASSES
-
 // class expression
 //const PersonCl = class {}
 
 // class declaration
 class PersonCl {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
 
-  // methods will be applied to the .prototype property
+  // Instance methods
+  // Methods will be added to the .prototype property
   calcAge() {
     console.log(2037 - this.birthYear);
   }
 
   greet() {
-    console.log(`Hey ${this.firstName}`);
+    console.log(`Hey ${this.fullName}`);
+  }
+
+  // getters and setters in classes
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  // Set a property that already exists
+  set fullName(name) {
+    if (name.includes(" ")) this._fullName = name;
+    else alert(`${name} is not a full name!`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  // Static method
+  static hey() {
+    console.log("Hey there");
+    console.log(this);
   }
 }
 
-const jessica = new PersonCl("jessica", 1996);
+const jessica = new PersonCl("Jessica Davis", 1996);
 console.log(jessica);
 jessica.calcAge();
+console.log(jessica.age);
 
 // PersonCl.prototype.greet = function() {
 //   console.log(`Hey ${this.firstName}`);
 // }
 jessica.greet();
 
-// Classes are not hoisted even the class declarations
-// Classes are first-class citizens
-// Classes are executed in strict mode
+// 1. Classes are not hoisted even the class declarations
+// 2. Classes are first-class citizens
+// 3. Classes are executed in strict mode
+
+const walter = new PersonCl("Walter White", 1965);
+
+PersonCl.hey();
 
 // Getters and Setters
 
-// getters and setters are called assessor properties 
+// getters and setters are called assessor properties
 // normal properties are called data properties
 
 // getters and setters in simple object literals
+const account = {
+  owner: "jonas",
+  movements: [200, 530, 120, 300],
+
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+console.log(account.latest);
+account.latest = 50;
+console.log(account.movements);
+
+// static method
+
+// object.create
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+console.log(steven);
+
+steven.name = "Steven";
+steven.birthYear = 2002;
+steven.calcAge();
+
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+sarah.init("Sarah", 1979);
+sarah.calcAge();
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+  this.course = course;
+};
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName}, and i studied ${this.course}`);
+};
+
+const mike = new Student("Mike", 2020, "Computer Science");
+console.log(mike);
+mike.introduce();
