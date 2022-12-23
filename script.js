@@ -510,7 +510,7 @@ mike.introduce();*/
 /////////////////////////////////////
 
 //Inheritance Between Classes: constructor function
-const Person = function (firstName, birthYear) {
+/*const Person = function (firstName, birthYear) {
   this.firstName = firstName;
   this.birthYear = birthYear;
 };
@@ -522,10 +522,10 @@ Person.prototype.calcAge = function () {
 const Student = function (firstName, birthYear, course) {
   Person.call(this, firstName, birthYear);
   this.course = course;
-};
+};*/
 
 // Linking prototypes
-Student.prototype = Object.create(Person.prototype);
+/*Student.prototype = Object.create(Person.prototype);
 
 Student.prototype.introduce = function () {
   console.log(`My name is ${this.firstName} and I study ${this.course}`);
@@ -542,11 +542,11 @@ console.log(mike instanceof Student);
 console.log(mike instanceof Person);
 console.log(mike instanceof Object);
 
-Student.prototype.constructor = Student;
+Student.prototype.constructor = Student;*/
 //console.dir(Student.prototype.constructor);
 
 // Inheritance Between Classes: ES6 classes
-class PersonCl {
+/*class PersonCl {
   constructor(fullName, birthYear) {
     this.fullName = fullName;
     this.birthYear = birthYear;
@@ -582,11 +582,11 @@ class PersonCl {
     console.log("Hey there");
     console.log(this);
   }
-}
+}*/
 
 // extend and super keywordS are the 2 ingredients we need to inherit between ES6 classes
 
-class StudentCl extends PersonCl {
+/*class StudentCl extends PersonCl {
   constructor(fullName, birthYear, course) {
     //Always need to happen first!
     super(fullName, birthYear);
@@ -716,4 +716,165 @@ console.log(acc1.getMovements());
 
 /// Chaining 
 acc1.deposit(300).deposit(500).withdrawal(35).requestLoan(25000).deposit(4000);
-console.log(acc1.getMovements());
+console.log(acc1.getMovements());*/
+
+
+// A CLOSER LOOK AT FUNCTIONS
+
+const bookings = [];
+
+const createBooking = function(flightNum, numPassengers = 1, price = 199 * numPassengers) {
+  // ES5 - default parameters
+  // numPassengers = numPassengers || 1;
+  // price = price || 199;
+
+  const booking = {
+    flightNum,
+    numPassengers,
+    price
+  }
+
+  console.log(booking);
+  bookings.push(booking);
+}
+
+createBooking('LH123');
+createBooking('LH123', 2, 800);
+createBooking('LH123', 2);
+createBooking('LH123', 5);
+createBooking('LH123', undefined, 1000);
+
+const flight = "LH234";
+
+const jonas = {
+  name: "Jonas Schmedtmann",
+  passport: 24739479284
+}
+
+const checkIn = function(flightNum, passenger) {
+  flightNum = "LH999";
+  passenger.name = "Mr " + passenger.name;
+
+  if (passenger.passport = 24739479284){
+    //alert('Checked in');
+  } else {
+    alert('Wrong passport!');
+  }
+}
+
+// checkIn(flight, jonas);
+// console.log(flight);
+// console.log(jonas);
+
+const newPassport = function(person) {
+  person.passport = Math.trunc(Math.random() * 100000000000);
+}
+
+newPassport(jonas);
+checkIn(flight, jonas);
+
+///////////////////////////////////////
+// FIRST CLASS AND HIGHER ORDER FUNCTIONS
+
+const oneWord = function(str) {
+  return str.replace(/ /g, '').toLowerCase();
+}
+
+const upperFirstWord = function(str) {
+  [first, ...others] = str.split(" ");
+  return [first.toUpperCase(), ...others].join(" ");
+}
+
+// Higher-order functions
+const transformer = function(str, fn) {
+  console.log(`The original string: ${str}`);
+  console.log(`The transformed string: ${fn(str)}`);
+
+  console.log(`Transformed by: ${fn.name}`);
+};
+
+transformer("JavaScript is the best!", upperFirstWord);
+transformer("JavaScript is the best!", oneWord);
+
+// JS uses callbacks all the time
+const high5 = function () {
+  console.log('high five');
+};
+
+document.body.addEventListener('click', high5);
+['John', 'Jonas', 'Martha'].forEach(high5);
+
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  }
+}
+
+const greeterHey = greet('Hey');
+greeterHey('Jonas');
+greeterHey('Steven');
+
+greet('Hello')('Bright');
+
+const greetArr = greeting => name => console.log(`${greeting} ${name}`);
+greetArr('Hi')('Victor');
+
+//////////////////////////////////////////
+// THE CALL AND APPLY METHOD
+
+const lufthansa = {
+  airline: "Lufthansa",
+  iatacode: "LH",
+  bookings: [],
+
+  //book: function () {}
+  book(flightNum, name) {
+    console.log(`${name} booked a seat on ${this.airline} flight ${this.iatacode}${flightNum}`);
+    this.bookings.push({flight: `${this.iatacode}${flightNum}`, name});
+  }
+}
+
+lufthansa.book(239, "Jonas Schmedtmann");
+lufthansa.book(635, "John Smith");
+console.log(lufthansa);
+
+const eurowings = {
+  name: "Eurowings",
+  iatacode: "EW",
+  bookings: [],
+}
+
+const book = lufthansa.book;
+
+// Does NOT work
+//book(23, "Srah Williams");
+
+book.call(eurowings, 23, "Sarah Williams");
+console.log(eurowings);
+
+book.call(lufthansa, 23, "Mary Cooper");
+console.log(lufthansa);
+
+const swiss = {
+  airline: "Swiss Air Lines",
+  iatacode: "LX",
+  bookings: []
+}
+
+/*book.call(swiss, 239, "Mary Cooper");
+console.log(swiss);*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
