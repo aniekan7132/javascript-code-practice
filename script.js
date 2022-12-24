@@ -797,12 +797,12 @@ transformer("JavaScript is the best!", upperFirstWord);
 transformer("JavaScript is the best!", oneWord);
 
 // JS uses callbacks all the time
-const high5 = function () {
+/*const high5 = function () {
   console.log('high five');
 };
 
 document.body.addEventListener('click', high5);
-['John', 'Jonas', 'Martha'].forEach(high5);
+['John', 'Jonas', 'Martha'].forEach(high5);*/
 
 const greet = function (greeting) {
   return function (name) {
@@ -839,7 +839,7 @@ lufthansa.book(635, "John Smith");
 console.log(lufthansa);
 
 const eurowings = {
-  name: "Eurowings",
+  airline: "Eurowings",
   iatacode: "EW",
   bookings: [],
 }
@@ -849,6 +849,7 @@ const book = lufthansa.book;
 // Does NOT work
 //book(23, "Srah Williams");
 
+// Call method
 book.call(eurowings, 23, "Sarah Williams");
 console.log(eurowings);
 
@@ -861,8 +862,180 @@ const swiss = {
   bookings: []
 }
 
-/*book.call(swiss, 239, "Mary Cooper");
-console.log(swiss);*/
+book.call(swiss, 583, "Mary Cooper");
+console.log(swiss);
+
+// Apply method - does not recieve a list of arguments after the this keyword
+const flightData = [583, "George Cooper"];
+book.apply(swiss, flightData);
+console.log(swiss);
+
+book.call(swiss, ...flightData);
+
+// Bind method
+// book.call(eurowings, 23, "Sarah Williams");
+
+const bookEW = book.bind(eurowings);
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+
+bookEW(23, "Steven Williams");
+
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23("Jonas Schmedtmann");
+bookEW23("Martha Cooper");
+
+// With event listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+}
+//lufthansa.buyPlane()
+
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application
+
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+// addVAT = value => value + value * 0.23;
+
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+const addTaxRate = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  }
+}
+
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(100));
+console.log(addVAT(23));
+
+///////////////////////////////////
+// IIFE 
+(function () {
+  console.log("This function will never run again");
+})();
+
+// IIFE - arrow function
+(() => console.log("This function will ALSO never run again"))();
+
+////////////////////////
+// CLOSURES
+
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passenger`);
+  }
+}
+
+const booker = secureBooking();
+booker();
+booker();
+booker();
+
+//////////////////////////
+// More closuress examples
+
+// Example 1
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  }
+}
+
+const h = function () {
+  b = 777;
+  f = function () {
+    console.log(b * 2);
+  }
+}
+
+g();
+f();
+
+// Reasigning f function
+h();
+f();
+console.dir(f);
+
+// Example 2
+const boardPassengers = function(n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function() {
+    console.log(`We're now boarding all ${n} passengers`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers.`);
+  }, wait * 1000);
+
+  console.log(`Will start boarding in ${wait} seconds`);
+}
+
+boardPassengers(180, 3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
