@@ -721,7 +721,7 @@ console.log(acc1.getMovements());*/
 
 // A CLOSER LOOK AT FUNCTIONS
 
-const bookings = [];
+/*const bookings = [];
 
 const createBooking = function(flightNum, numPassengers = 1, price = 199 * numPassengers) {
   // ES5 - default parameters
@@ -771,12 +771,12 @@ const newPassport = function(person) {
 }
 
 newPassport(jonas);
-checkIn(flight, jonas);
+checkIn(flight, jonas);*/
 
 ///////////////////////////////////////
 // FIRST CLASS AND HIGHER ORDER FUNCTIONS
 
-const oneWord = function(str) {
+/*const oneWord = function(str) {
   return str.replace(/ /g, '').toLowerCase();
 }
 
@@ -794,7 +794,7 @@ const transformer = function(str, fn) {
 };
 
 transformer("JavaScript is the best!", upperFirstWord);
-transformer("JavaScript is the best!", oneWord);
+transformer("JavaScript is the best!", oneWord);*/
 
 // JS uses callbacks all the time
 /*const high5 = function () {
@@ -804,7 +804,7 @@ transformer("JavaScript is the best!", oneWord);
 document.body.addEventListener('click', high5);
 ['John', 'Jonas', 'Martha'].forEach(high5);*/
 
-const greet = function (greeting) {
+/*const greet = function (greeting) {
   return function (name) {
     console.log(`${greeting} ${name}`);
   }
@@ -817,12 +817,12 @@ greeterHey('Steven');
 greet('Hello')('Bright');
 
 const greetArr = greeting => name => console.log(`${greeting} ${name}`);
-greetArr('Hi')('Victor');
+greetArr('Hi')('Victor');*/
 
 //////////////////////////////////////////
 // THE CALL AND APPLY METHOD
 
-const lufthansa = {
+/*const lufthansa = {
   airline: "Lufthansa",
   iatacode: "LH",
   bookings: [],
@@ -916,21 +916,21 @@ const addTaxRate = function (rate) {
 
 const addVAT2 = addTaxRate(0.23);
 console.log(addVAT2(100));
-console.log(addVAT(23));
+console.log(addVAT(23));*/
 
 ///////////////////////////////////
 // IIFE 
-(function () {
+/*(function () {
   console.log("This function will never run again");
 })();
 
 // IIFE - arrow function
-(() => console.log("This function will ALSO never run again"))();
+(() => console.log("This function will ALSO never run again"))();*/
 
 ////////////////////////
 // CLOSURES
 
-const secureBooking = function () {
+/*const secureBooking = function () {
   let passengerCount = 0;
 
   return function () {
@@ -984,8 +984,86 @@ const boardPassengers = function(n, wait) {
   console.log(`Will start boarding in ${wait} seconds`);
 }
 
-boardPassengers(180, 3);
+boardPassengers(180, 3);*/
 
+///////////////////////////////////////
+//////////////////////////////////////
+
+// Selecting elements
+console.log(document.documentElement);
+console.log(document.head);
+console.log(document.body);
+
+const header = document.querySelector('.header');
+const allSections = document.querySelectorAll('.section');
+
+document.getElementById('section--1');
+const allButtons = document.getElementsByTagName('button');
+console.log(allButtons);
+
+console.log(document.getElementsByClassName('btn'));
+
+// Creating aand inserting elements
+// .insertAdjacentHTML
+
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+//message.textContent = 'We use cookies for improved functionality and analytics.';
+message.innerHTML = 'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
+
+// adds as first child or last child
+//header.prepend(message);
+header.append(message);
+//header.append(message.cloneNode(true));
+
+// adds as sibling
+//header.before(message);
+//header.after(message);
+
+//  Delete elements 
+document.querySelector('.btn--close-cookie').addEventListener('click', function() {
+  message.remove();
+  //message.parentElement.removeChild(message);
+});
+
+// Styles, attributes, and classes
+
+// Styles- DOM styles are called inline styles
+message.style.backgroundColor = "#37383d";
+message.style.width = "120%";
+
+message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 20 + 'px';
+
+// Custom proprty or variables
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.className);
+
+// Set attribute
+// logo.alt = 'Beautiful minimalist logo';
+
+// Non standard property
+// console.log(logo.getAttribute(designer));
+// logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src); //- absolute
+console.log(logo.getAttribute('src')); //- relative
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+// Data attribute
+console.log(logo.dataset.versionNumber);
+
+// Classes
+// logo.classList.add();
+// logo.classList.remove();
+// logo.classList.toggle();
+// logo.classList.contains();
 
 
 
