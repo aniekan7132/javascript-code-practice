@@ -1229,7 +1229,7 @@ const renderError = function (msg) {
   //countriesContainer.style.opacity = 1;
 };
 
-const getCountryAndNeighbor = function (country) {
+/*const getCountryAndNeighbor = function (country) {
   // AJAX call country 1
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
@@ -1262,5 +1262,35 @@ const getCountryAndNeighbor = function (country) {
 };
 
 getCountryAndNeighbor('nigeria');
-//getCountryData('usa');
+//getCountryData('usa');*/
 
+const getCountryData = function (country) {
+  // Country 1
+  getJSON(`https://restcountries.com/v3.1/name/${country}`, "Country not found")
+    .then((data) => {
+      //console.log(data);
+      renderCountry(data[0]);
+      const neighbour = data[0].borders[0];
+      console.log(neighbour);
+
+      if (!neighbour) throw new Error("No neighbour found!");
+
+      // Country 2
+      return getJSON(
+        `https://restcountries.com/v3.1/alpha/${neighbour}`,
+        "country not found"
+      );
+    })
+    .then((data) => renderCountry(data, "neighbour"))
+    .catch((err) => {
+      //console.error(`${err} ✨✨✨`);
+      renderError(`Something went wrong 🔥🔥🔥${err.message}. Try again!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
+
+btn.addEventListener("click", function () {
+  getCountryData("nigeria");
+});
